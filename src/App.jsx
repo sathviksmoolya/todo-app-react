@@ -15,7 +15,7 @@ function App() {
   useEffect(() => {
     let todoString = localStorage.getItem("todos")
     if(todoString){
-      let todos = JSON.parse(localStorage.getItem("todos"))
+      let todos = JSON.parse(todoString)
       setTodos(todos)
     }
     
@@ -38,18 +38,16 @@ function App() {
   }
 
   const handleDelete = (e,id)=>{
-    let newTodos = todos.filter(item=>{
-      return item.id!==id
-    });
+    let newTodos = todos.filter(item=>item.id!==id)
     setTodos(newTodos)
-    saveToLS()
+    localStorage.setItem("todos", JSON.stringify(newTodos))
 
 
   }
 
   const handleAdd = () =>{
     setTodos([...todos,{id:uuidv4(), todo, isCompleted:false}])
-    saveToLS()
+    localStorage.setItem("todos", JSON.stringify([...todos,{id:uuidv4(), todo, isCompleted:false}]))
     setTodo("")
     
 
